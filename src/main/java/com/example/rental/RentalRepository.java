@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RentalRepository extends JpaRepository<Rental, Integer> {
 	@Query(value = "SELECT * FROM Rental", nativeQuery = true)
-	List<Car> getAllRentals();
+	List<Rental> getAllRentals();
 }
