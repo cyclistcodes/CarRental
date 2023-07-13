@@ -1,17 +1,16 @@
 package com.example.rental;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 
 @Entity
-@Table(name = "car")
+@Table()
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false)   
     private String model;
     @Column(nullable = false)
     private Integer price;
