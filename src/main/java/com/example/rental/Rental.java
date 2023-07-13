@@ -16,7 +16,7 @@ public class Rental {
     LocalDate birthDate;
 
     @Column(nullable = false)
-    String carId;
+    String carModel;
 
     @Column(nullable = false)
     LocalDate startDate;
@@ -30,10 +30,10 @@ public class Rental {
     public Rental() {
     }
 
-    public Rental(String fullName, LocalDate birthDate, String carId, LocalDate startDate, LocalDate endDate, Integer totalRevenue) {
+    public Rental(String fullName, LocalDate birthDate, String carModel, LocalDate startDate, LocalDate endDate, Integer totalRevenue) {
         this.fullName = fullName;
         this.birthDate = birthDate;
-        this.carId = carId;
+        this.carModel = carModel;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalRevenue = totalRevenue;
@@ -45,8 +45,8 @@ public class Rental {
         return birthDate;
     }
 
-    public String getCarId() {
-        return carId;
+    public String getCarModel() {
+        return carModel;
     }
 
     public LocalDate getStartDate() {
