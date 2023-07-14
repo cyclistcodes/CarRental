@@ -3,21 +3,23 @@ import { Component } from 'react';
 
 class App extends Component {
 	state = {
-		message: "If spring backend is running and database is running, then this message should be replaced!"
+	rentals:[]
 	};
 	async componentDidMount() {
-		await this.getHelloWorld();
+		await this.getRentalsForAdmin();
 	}
-	async getHelloWorld() {
-		const response           = await fetch('/helloworld');
-		const helloWorldResponse = await response.json();
-		this.setState({ message: helloWorldResponse.message });
+	async getRentalsForAdmin() {
+		const response = await fetch('/get/rentals');
+		const rentals = await response.json();
+		this.setState({rentals: rentals});
 	}
 	render() {
 		return (
 			<div className="App">
 				<p>
-					{this.state.message}
+					Rentals: 
+					{this.state.rentals.map((rental,index)=>(
+						<span key={index}>{rental.carModel}</span>))}
 				</p>
 			</div>
 		);
