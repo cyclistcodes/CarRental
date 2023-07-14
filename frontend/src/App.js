@@ -22,15 +22,19 @@ class App extends Component {
 			endDate: '2022-07-05',
 			totalRevenue: 500
 	};
-	const response=await fetch('/post/rental',{
-		metod:'POST',
-		headers:{
-		'Content-type': 'application/json'
-		},
-		body: JSON.stringify(rentalData)
-	});
-	const bookedRental=await response.json();
+	try{
+		const response=await fetch('/post/rental',{
+			metod:'GET',
+			headers:{
+			'Content-type': 'application/json'
+			},
+			body: JSON.stringify(rentalData)
+		});
+		const bookedRental=await response.json();
 	console.log('Booked rental:', bookedRental);
+	}catch(error){
+		console.error('Error booking rental:', error)
+	}
 }
 	render() {
 		return (
