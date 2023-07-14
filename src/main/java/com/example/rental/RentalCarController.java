@@ -16,11 +16,11 @@ public class RentalCarController {
 		this.carRepository=carRepository;
 		this.service=service;
 	}
-	@GetMapping("/admin")
+	@GetMapping("/get/rentals")
 	public List<Rental> showAdmin() {
 		return service.getAllRentals();
 	}
-	@PostMapping("/booking")
+	@PostMapping("/post/rental")
 	public Rental bookCar(@RequestBody Rental rental) {
 		return service.saveRental(rental);
 	}
