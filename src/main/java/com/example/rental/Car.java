@@ -15,14 +15,6 @@ public class Car {
     @Column(nullable = false)
     private Integer price;
 
-    public Car() {
-    }
-
-    public Car(String model, Integer price) {
-        this.model = model;
-        this.price = price;
-    }
-
     public Integer getId() {
         return id;
     }
