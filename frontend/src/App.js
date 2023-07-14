@@ -12,10 +12,30 @@ class App extends Component {
 		const response = await fetch('/get/rentals');
 		const rentals = await response.json();
 		this.setState({rentals: rentals});
-	}
+	};
+	async bookRental(){
+		const rentalData={
+			fullName: 'John Doe',
+			birthDate: '1990-01-15',
+			carModel: 'Ford Transit',
+			startDate: '2022-07-01',
+			endDate: '2022-07-05',
+			totalRevenue: 500
+	};
+	const response=await fetch('/post/rental',{
+		metod:'POST',
+		headers:{
+		'Content-type': 'application/json'
+		},
+		body: JSON.stringify(rentalData)
+	});
+	const bookedRental=await response.json();
+	console.log('Booked rental:', bookedRental);
+}
 	render() {
 		return (
 			<div className="App">
+				<button onClick={()=>this.bookRental()}>Book Car</button>
 				<p>
 					Rentals: 
 					{this.state.rentals.map((rental,index)=>(
