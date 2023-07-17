@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../App.css'; // Import the CSS file
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 export const BookingView = () => {
   // State variables for form inputs
@@ -10,10 +11,11 @@ export const BookingView = () => {
   const [carPrice, setCarPrice] = useState(0);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [totalRevenue, setTotalRevenue] = useState('');
+  const [totalRevenue, setTotalRevenue] = useState(0);
   const [cars, setCars] = useState([]);
   const [bookingResult, setBookingResult] = useState(null); // State-variabel för bokningsresultat
   const [isCarAvailable, setCarAvailability] = useState(true);
+  const navigate = useNavigate();
 
   // Fetch all cars from the server
   const getAllCars = async () => {
@@ -91,12 +93,12 @@ export const BookingView = () => {
   useEffect(() => {
     const revenue = calculateTotalRevenue();
     setTotalRevenue(revenue);
-  }, [carModel, startDate, endDate, carPrice]);
+  }, [carModel, startDate, endDate]);
   
   // Function to book a car rental
   const bookCarRental = async () => {
     // Validate form inputs before booking
-    if (!fullName || !birthDate || !carModel || !startDate || !endDate || !totalRevenue) {
+    if (!fullName || !birthDate || !carModel || !startDate || !endDate || totalRevenue === 0) {
       console.log("Please fill in all required fields before submitting the booking");
       return;
     }
@@ -135,6 +137,7 @@ export const BookingView = () => {
         console.log('Booking submitted successfully');
         setBookingResult({ success: true }); // Sätt bokningsresultatet till framgång
         // Reset the form or perform other actions on successful booking
+        navigate('/');
       } else {
         console.log('Error in booking');
         setBookingResult({ success: false }); // Sätt bokningsresultatet till fel
@@ -187,11 +190,6 @@ export const BookingView = () => {
     }
   }, [carModel, startDate, endDate]);
 
- /* // Call the checkCarAvailability function whenever the car model, start date, or end date changes
-  useEffect(() => {
-    checkCarAvailability();
-  }, [checkCarAvailability]);
-*/
   return (
     <div className="booking-view">
       <h2>Car Rental Booking</h2>
