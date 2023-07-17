@@ -7,6 +7,7 @@ export const BookingView = () => {
   const [fullName, setFullName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [carModel, setCarModel] = useState('');
+  const [carPrice, setCarPrice] = useState(0);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [totalRevenue, setTotalRevenue] = useState('');
@@ -51,8 +52,18 @@ export const BookingView = () => {
   };
 
   const handleCarModelChange = (event) => {
-    setCarModel(event.target.value);
+    const selectedCarModel = event.target.value;
+    setCarModel(selectedCarModel);
+
+    // Find the selected car in the cars array and set its price to the carPrice state
+    const selectedCar = cars.find((car) => car.model === selectedCarModel);
+    if (selectedCar) {
+      setCarPrice(selectedCar.price);
+    } else {
+      setCarPrice(0); // If the car is not found, set the carPrice to 0 (or any default value you prefer)
+    }
   };
+
 
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
@@ -60,10 +71,6 @@ export const BookingView = () => {
 
   const handleEndDateChange = (event) => {
     setEndDate(event.target.value);
-  };
-
-  const handleTotalRevenueChange = (event) => {
-    setTotalRevenue(event.target.value);
   };
 
   // Function to book a car rental
@@ -146,7 +153,7 @@ export const BookingView = () => {
     };
 
     try {
-      const res = await fetch('/get/isAvailable', {
+      await fetch('/get/isAvailable', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -183,7 +190,7 @@ export const BookingView = () => {
           <option value="">Select Car Model</option>
           {cars.map((car) => (
             <option key={car.id} value={car.model}>
-              {car.model}
+              {car.model} {car.price} SEK/day 
             </option>
           ))}
         </select>
@@ -194,8 +201,8 @@ export const BookingView = () => {
         <label>End Date:</label>
         <input type="date" value={endDate} onChange={handleEndDateChange} />
 
-        <label>Total Revenue:</label>
-        <input type="text" value={totalRevenue} onChange={handleTotalRevenueChange} />
+        <label>Total Cost:</label>
+        <p>{totalRevenue} </p>
 
         {/* Render car availability status */}
         {carModel && startDate && endDate && (
