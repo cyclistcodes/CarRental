@@ -2,6 +2,8 @@ package com.example.rental;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,4 +27,9 @@ public class RentalCarService {
     public List<Rental> getAllRentals() {
         return rentalRepository.getAllRentals();
     }
+
+    public int countNumberOfOverlapsForCar(String carModel, LocalDate startDate, LocalDate endDate) {
+        return rentalRepository.countNumberOfOverlapsForCar(carModel, startDate, endDate);
+    }
 }
+
