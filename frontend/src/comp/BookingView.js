@@ -73,6 +73,26 @@ export const BookingView = () => {
     setEndDate(event.target.value);
   };
 
+  const calculateTotalRevenue = () => {
+    if (!startDate || !endDate) return 0;
+  
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+    const oneDay = 24 * 60 * 60 * 1000; // Number of milliseconds in one day
+
+    // Man får betala alla dagar som bilen är bokad trots halvdagar
+    const diffDays = Math.round(Math.abs((startDateObj - endDateObj) / oneDay)) + 1; 
+    const totalRevenue = diffDays * carPrice;
+  
+    return totalRevenue;
+  };
+  
+  // Call calculateTotalRevenue() if the carmodel, startdate, or enddate changes
+  useEffect(() => {
+    const revenue = calculateTotalRevenue();
+    setTotalRevenue(revenue);
+  }, [carModel, startDate, endDate, carPrice]);
+  
   // Function to book a car rental
   const bookCarRental = async () => {
     // Validate form inputs before booking
@@ -202,7 +222,7 @@ export const BookingView = () => {
         <input type="date" value={endDate} onChange={handleEndDateChange} />
 
         <label>Total Cost:</label>
-        <p>{totalRevenue} </p>
+        <p>{totalRevenue ? totalRevenue : 0} SEK</p>
 
         {/* Render car availability status */}
         {carModel && startDate && endDate && (
